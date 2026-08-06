@@ -1,0 +1,33 @@
+# ─── Зависимости ────────────────────────────────────────────────────────────
+node_modules/
+package-lock.json
+
+# ─── Секреты (НЕ коммитить!) ────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Runtime-данные (генерируются ботом во время работы) ───────────────────
+levels.json
+message_ids.json
+servers.json
+admin_config.json
+vip_config.json
+modlog_config.json
+
+# ─── Логи и временные файлы ─────────────────────────────────────────────────
+*.log
+logs/
+pm2*.log
+npm-debug.log*
+_test_*.mjs
+_test_*.png
+/tmp/
+
+# ─── ОС / IDE ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

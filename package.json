@@ -1,0 +1,29 @@
+{
+  "name": "discord-bot-nodejs",
+  "version": "1.0.0",
+  "description": "Discord bot with server monitoring, levels, verification, jokes, VIP and admin systems",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "cs2",
+    "server-monitor"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.97",
+    "axios": "^1.6.5",
+    "discord.js": "^14.27.0",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "gamedig": "^5.3.2",
+    "mysql2": "^3.9.0",
+    "source-server-query": "^3.0.3"
+  }
+}
