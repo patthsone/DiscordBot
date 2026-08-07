@@ -53,11 +53,4 @@ export const STEAM_API_KEY = process.env.STEAM_API_KEY || '';
 export const FACEIT_API_KEY = process.env.FACEIT_API_KEY || '';
 export const FACEIT_GAME = process.env.FACEIT_GAME || 'cs2';
 
-// ─── HTTP-сервер статистики ──────────────────────────────────────────────────
-// Порт для эндпоинта /stats (JSON), который используется shields.io-бейджами
-// в README репозитория для отображения живой статистики бота.
-export const STATS_PORT = parseInt(process.env.STATS_PORT || '3000', 10);
-// Простой токен доступа (опционально). Если задан — /stats требует ?token=...
-export const STATS_TOKEN = process.env.STATS_TOKEN || '';
-
 

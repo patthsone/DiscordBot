@@ -2,16 +2,6 @@
 
 Discord-бот для CS2-сообщества: верификация по Steam, VIP-система, уровни активности, FACEIT-роли, мониторинг серверов, авто-модерация и многое другое.
 
-> **Живая статистика бота.** Чтобы бейджи ниже показывали реальные числа, бот должен быть запущен с открытым `STATS_PORT` (по умолчанию `3000`) на сервере с публичным IP.
-> Замените `YOUR_SERVER_HOST` на домен/IP вашего сервера (например, `stats.luxecs2.ru` или `85.119.149.36:3000`).
-
-<!-- Живые бейджи статистики (shields.io endpoint) -->
-![Servers](https://img.shields.io/endpoint?url=https://YOUR_SERVER_HOST:3000/badge/servers&cacheSeconds=60)
-![Users](https://img.shields.io/endpoint?url=https://YOUR_SERVER_HOST:3000/badge/users&cacheSeconds=60)
-![Installs](https://img.shields.io/endpoint?url=https://YOUR_SERVER_HOST:3000/badge/installs&cacheSeconds=60)
-![Uptime](https://img.shields.io/endpoint?url=https://YOUR_SERVER_HOST:3000/badge/uptime&cacheSeconds=60)
-![Ping](https://img.shields.io/endpoint?url=https://YOUR_SERVER_HOST:3000/badge/ping&cacheSeconds=60)
-
 ## ✨ Возможности
 
 - **🔐 Верификация Steam** — привязка Steam64 ID, авто-выдача ролей
@@ -140,38 +130,6 @@ FACEIT_GAME=cs2
 | Статистика админов | ежедневно | 09:00 МСК |
 | Обновление статусов серверов | по интервалу | `UPDATE_INTERVAL` (сек) |
 
-## 📊 Статистика бота (живые бейджи)
-
-Бот запускает HTTP-сервер статистики, который отдаёт живые данные через JSON. Это позволяет показывать актуальную статистику прямо в README репозитория через [shields.io](https://shields.io) бейджи.
-
-### Что отслеживается
-
-- 🌐 **Количество серверов** — где установлен бот
-- 👥 **Количество пользователей** — суммарно на всех серверах
-- 📥 **Кто установил бота** — журнал (имя сервера, кто добавил, когда, кол-во участников)
-- ⏱️ **Аптайм бота** — сколько работает без перезапуска
-- ⚡ **Пинг** — задержка до Discord API
-- 📤 **Удаления** — с каких серверов бот был удалён и когда
-
-### Эндпоинты HTTP-сервера
-
-| Эндпоинт | Описание |
-|----------|----------|
-| `GET /` | Приветствие / список эндпоинтов |
-| `GET /stats` | Полная статистика в JSON |
-| `GET /badge/:metric` | Обёртка для shields.io (`servers`, `users`, `installs`, `uptime`, `ping`) |
-| `GET /health` | Проверка здоровья (для uptime-мониторинга) |
-
-### Настройка живых бейджей в README
-
-1. Убедитесь, что порт `STATS_PORT` (по умолчанию `3000`) открыт на сервере бота.
-2. Замените `YOUR_SERVER_HOST` в бейджах выше на ваш домен или `IP:порт`.
-   - Пример: `https://img.shields.io/endpoint?url=http://85.119.149.36:3000/badge/servers`
-3. (Опционально) Задайте `STATS_TOKEN` в `.env` для защиты и добавьте `&query=token`:
-   - `https://img.shields.io/endpoint?url=http://host:3000/badge/servers%3Ftoken%3Dсекрет`
-
-Журнал установок (кто добавил бота) хранится в `stats_history.json` (исключён из git).
-
 ## 📁 Структура проекта
 
 ```
@@ -188,7 +146,6 @@ FACEIT_GAME=cs2
 │   ├── notifications_cog.js  # Уведомления о VIP
 │   ├── jokes_cog.js          # Шутки
 │   ├── ping_cog.js           # Статус системы
-│   ├── stats_cog.js          # HTTP-сервер статистики + трекинг установок
 │   └── welcome_cog.js        # Приветствие
 ├── utils/                # Утилиты
 │   ├── database.js           # MySQL пулы подключений
