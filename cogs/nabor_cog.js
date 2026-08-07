@@ -54,19 +54,23 @@ function buildRecruitmentEmbed() {
 
 export default function(client) {
     client.once('clientReady', async () => {
-        await client.application.commands.create({
-            name: 'nabor',
-            description: '📢 Отправить объявление о наборе модераторов в канал',
-            options: [
-                {
-                    name: 'channel',
-                    type: 7, // CHANNEL
-                    description: 'Канал, куда отправить объявление',
-                    required: true
-                }
-            ]
-        });
-        console.log('✅ Nabor cog загружен');
+        try {
+            await client.application.commands.create({
+                name: 'nabor',
+                description: '📢 Отправить объявление о наборе модераторов в канал',
+                options: [
+                    {
+                        name: 'channel',
+                        type: 7, // CHANNEL
+                        description: 'Канал, куда отправить объявление',
+                        required: true
+                    }
+                ]
+            });
+            console.log('✅ Команда /nabor зарегистрирована');
+        } catch (error) {
+            console.error('❌ Ошибка регистрации команды /nabor:', error);
+        }
     });
 
     client.on('interactionCreate', async interaction => {
