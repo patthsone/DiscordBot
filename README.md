@@ -111,6 +111,7 @@ FACEIT_GAME=cs2
 | `/add_server name ip port` | Добавить CS2-сервер в мониторинг |
 | `/remove_server name` | Удалить сервер из мониторинга (с автодополнением) |
 | `/faceit_update` | Принудительно обновить уровни FACEIT всех пользователей |
+| `/nabor channel #канал` | Отправить объявление о наборе модераторов в канал (с @everyone) |
 
 ### 🎯 Интерактивные элементы (кнопки/меню)
 
@@ -146,6 +147,7 @@ FACEIT_GAME=cs2
 │   ├── notifications_cog.js  # Уведомления о VIP
 │   ├── jokes_cog.js          # Шутки
 │   ├── ping_cog.js           # Статус системы
+│   ├── nabor_cog.js          # Объявления о наборе (/nabor)
 │   └── welcome_cog.js        # Приветствие
 ├── utils/                # Утилиты
 │   ├── database.js           # MySQL пулы подключений
