@@ -15,6 +15,7 @@ admin_config.json
 vip_config.json
 modlog_config.json
 stats_history.json
+topdonate_config.json
 
 # ─── Логи и временные файлы ─────────────────────────────────────────────────
 *.log

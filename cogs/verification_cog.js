@@ -245,6 +245,12 @@ async function verifyUser(user, steam64) {
         if (discordClient && typeof discordClient.updateFaceitRole === 'function') {
             discordClient.updateFaceitRole(user, steam64);
         }
+
+        // 💰 Хук доната: выдаём роль Меценат/Донатер по сумме доната.
+        // client.updateDonateRole регистрируется cog'ом topdonate_cog. Если его нет — noop.
+        if (discordClient && typeof discordClient.updateDonateRole === 'function') {
+            discordClient.updateDonateRole(user, steam64);
+        }
         
         let dmSent = false;
         try {
