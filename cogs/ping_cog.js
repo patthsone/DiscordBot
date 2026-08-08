@@ -48,9 +48,9 @@ function progressBar(ratio) {
     return '▰'.repeat(filled) + '▱'.repeat(SEGMENTS - filled);
 }
 
-// Быстрая проверка подключения к БД (пулы 'vip' и 'admin')
+// Быстрая проверка подключения к БД (пулы 'vip', 'admin', 'donate')
 async function checkDbStatus() {
-    const checks = ['vip', 'admin'];
+    const checks = ['vip', 'admin', 'donate'];
     const results = {};
     for (const name of checks) {
         const pool = getNamedPool(name);
@@ -67,6 +67,34 @@ async function checkDbStatus() {
         }
     }
     return results;
+}
+
+// Дополнительная статистика по БД: кол-во записей, сумма донатов и т.п.
+async function getDbStats() {
+    const stats = {};
+
+    // VIP: кол-во верифицированных пользователей
+    try {
+        const pool = getNamedPool('vip');
+        if (pool) {
+            const [rows] = await pool.query('SELECT COUNT(*) AS cnt FROM verified_users');
+            stats.vip = { verified: Number(rows[0]?.cnt) || 0 };
+        }
+    } catch (_) { /* таблицы может не быть — игнор */ }
+
+    // Donate (ЛК): кол-во игроков и общая сумма донатов (all_cash)
+    try {
+        const pool = getNamedPool('donate');
+        if (pool) {
+            const [rows] = await pool.query('SELECT COUNT(*) AS cnt, COALESCE(SUM(all_cash),0) AS total FROM lk');
+            stats.donate = {
+                players: Number(rows[0]?.cnt) || 0,
+                totalRub: Number(rows[0]?.total) || 0
+            };
+        }
+    } catch (_) { /* игнор */ }
+
+    return stats;
 }
 
 // Запрос состояния игрового сервера (CS2). Используем общий serverMonitor
@@ -127,9 +155,10 @@ export default function(client) {
             }
         } catch (_) { /* Windows — нет loadavg */ }
 
-        // Параллельно: статус БД и игровых серверов
-        const [dbStatus, ...gameStates] = await Promise.all([
+        // Параллельно: статус БД, статистика БД и игровые серверы
+        const [dbStatus, dbStats, ...gameStates] = await Promise.all([
             checkDbStatus(),
+            getDbStats(),
             ...DEFAULT_SERVERS.map(s => queryGameServer(s.ip, s.port))
         ]);
 
@@ -171,10 +200,19 @@ export default function(client) {
         );
 
         // ── Базы данных ──
+        const labelMap = { vip: 'VIP', admin: 'Админы', donate: 'ЛК (донаты)' };
         const dbLines = Object.entries(dbStatus).map(([name, r]) => {
-            const label = name === 'vip' ? 'VIP' : name === 'admin' ? 'Админы' : name;
-            if (r.ok) return `> 🟢 \`${label}\` — \`${r.latency} мс\``;
-            return `> 🔴 \`${label}\` — недоступна`;
+            const label = labelMap[name] || name;
+            if (!r.ok) return `> 🔴 \`${label}\` — недоступна (${r.reason || 'ошибка'})`;
+            let line = `> 🟢 \`${label}\` — \`${r.latency} мс\``;
+            // Доп. статистика
+            if (name === 'vip' && dbStats.vip) {
+                line += ` · 👥 \`${dbStats.vip.verified} вериф.\``;
+            } else if (name === 'donate' && dbStats.donate) {
+                const totalFmt = dbStats.donate.totalRub.toLocaleString('ru-RU');
+                line += ` · 👥 \`${dbStats.donate.players}\` · 💰 \`${totalFmt}₽\``;
+            }
+            return line;
         });
         embed.addFields(
             { name: '\u200b', value: THEME.DIVIDER, inline: false },
@@ -239,8 +277,9 @@ export default function(client) {
             }
         } catch (_) { /* Windows */ }
 
-        const [dbStatus, ...gameStates] = await Promise.all([
+        const [dbStatus, dbStats, ...gameStates] = await Promise.all([
             checkDbStatus(),
+            getDbStats(),
             ...DEFAULT_SERVERS.map(s => queryGameServer(s.ip, s.port))
         ]);
 
@@ -266,9 +305,18 @@ export default function(client) {
             { name: '🎙️ Каналов', value: `\`${client_.channels.cache.size}\``, inline: true }
         );
 
+        const labelMap = { vip: 'VIP', admin: 'Админы', donate: 'ЛК (донаты)' };
         const dbLines = Object.entries(dbStatus).map(([name, r]) => {
-            const label = name === 'vip' ? 'VIP' : name === 'admin' ? 'Админы' : name;
-            return r.ok ? `> 🟢 \`${label}\` — \`${r.latency} мс\`` : `> 🔴 \`${label}\` — недоступна`;
+            const label = labelMap[name] || name;
+            if (!r.ok) return `> 🔴 \`${label}\` — недоступна (${r.reason || 'ошибка'})`;
+            let line = `> 🟢 \`${label}\` — \`${r.latency} мс\``;
+            if (name === 'vip' && dbStats.vip) {
+                line += ` · 👥 \`${dbStats.vip.verified} вериф.\``;
+            } else if (name === 'donate' && dbStats.donate) {
+                const totalFmt = dbStats.donate.totalRub.toLocaleString('ru-RU');
+                line += ` · 👥 \`${dbStats.donate.players}\` · 💰 \`${totalFmt}₽\``;
+            }
+            return line;
         });
         embed.addFields(
             { name: '\u200b', value: THEME.DIVIDER, inline: false },
