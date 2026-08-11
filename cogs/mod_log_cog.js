@@ -10,7 +10,7 @@
  *   - Авто-модерацию (оскорбления, оскорбления родителей)
  *
  * Авто-модерация:
- *   - Оскорбительные слова и оскорбления родителей → тайм-аут (по умолчанию 2 часа)
+ *   - Оскорбительные слова и оскорбления родителей → тайм-аут (по умолчанию 1 день)
  *   - Защита от обхода: нормализация текста (замена похожих символов, повторы букв)
  *   - Исключения: боты, админы, модераторы, игнорируемые каналы
  *
@@ -49,7 +49,7 @@ function loadModLogConfig() {
     const defaults = {
         modlog_channel_id: null,
         ignored_channels: [],
-        timeout_minutes: 120,
+        timeout_minutes: 1440,
         bad_words: [],
         parent_insults: []
     };
@@ -58,7 +58,7 @@ function loadModLogConfig() {
     return {
         modlog_channel_id: loaded.modlog_channel_id ?? null,
         ignored_channels: Array.isArray(loaded.ignored_channels) ? loaded.ignored_channels : [],
-        timeout_minutes: typeof loaded.timeout_minutes === 'number' ? loaded.timeout_minutes : 120,
+        timeout_minutes: 1440,
         bad_words: Array.isArray(loaded.bad_words) ? loaded.bad_words : [],
         parent_insults: Array.isArray(loaded.parent_insults) ? loaded.parent_insults : []
     };
@@ -161,13 +161,13 @@ function isIgnoredChannel(channelId) {
 // ─── Применение тайм-аута + логирование ────────────────────────────────────
 async function applyTimeoutAndLog(client, message, result) {
     const member = message.member;
-    const minutes = config.timeout_minutes || 120;
+    const minutes = 1440;
     const until = new Date(Date.now() + minutes * 60 * 1000);
 
     const typeLabel = result.type === 'parent'
         ? '🚫 Оскорбление родителей'
         : '⚠️ Оскорбительное сообщение';
-    const reason = `${typeLabel}: обнаружено «${result.word}». Авто-модерация: тайм-аут ${minutes} мин.`;
+    const reason = `${typeLabel}: обнаружено «${result.word}». Авто-модерация: тайм-аут 1 день.`;
 
     let timeoutApplied = false;
     let deleteApplied = false;
@@ -201,7 +201,7 @@ async function applyTimeoutAndLog(client, message, result) {
         .addFields(
             { name: '👤 Участник', value: `<@${message.author.id}> (\`${message.author.tag}\`)`, inline: false },
             { name: '📝 Тип', value: typeLabel, inline: true },
-            { name: '⏰ Длительность', value: `${minutes} мин`, inline: true },
+            { name: '⏰ Длительность', value: '1 день', inline: true },
             { name: '💬 Триггер', value: `\`${result.word}\``, inline: true },
             { name: '📌 Канал', value: `<#${message.channelId}>`, inline: true },
             { name: '🗑️ Сообщение', value: deleteApplied ? 'Удалено' : 'Не удалено', inline: true },
@@ -225,7 +225,7 @@ async function applyTimeoutAndLog(client, message, result) {
     if (timeoutApplied) {
         try {
             await message.channel.send({
-                content: `⛔ <@${message.author.id}> получил тайм-аут на ${minutes} мин. за ${result.type === 'parent' ? 'оскорбление родителей' : 'оскорбительное сообщение'}.`
+                content: `⛔ <@${message.author.id}> получил тайм-аут на 1 день. за ${result.type === 'parent' ? 'оскорбление родителей' : 'оскорбительное сообщение'}.`
             }).then(m => setTimeout(() => m.delete().catch(() => {}), 5000));
         } catch (_) { /* игнор */ }
     }

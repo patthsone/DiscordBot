@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const VIP_CONFIG_FILE = join(__dirname, '..', 'vip_config.json');
 
-const VERIFICATION_IMAGE_URL = "https://i.yapx.ru/dVYOy.png";
+const VERIFICATION_IMAGE_URL = "https://iimg.su/i/3DPZl6";
 const PROJECT_URL = "https://luxecs2.ru/";
 
 function getVipSids() {
