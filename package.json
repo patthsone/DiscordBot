@@ -1,6 +1,6 @@
 {
-  "name": "discord-bot-nodejs",
-  "version": "1.0.0",
+  "name": "luxecs2-discord-bot",
+  "version": "2.0.0",
   "description": "Discord bot with server monitoring, levels, verification, jokes, VIP and admin systems",
   "main": "index.js",
   "type": "module",
@@ -14,8 +14,8 @@
     "cs2",
     "server-monitor"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "patthsone <akeno.takymo@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.97",
     "axios": "^1.6.5",
