@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, MessageFlags } from 'discord.js';
-import { VERIFICATION_CHANNEL_ID, VERIFICATION_MESSAGE_ID, VERIFIED_ROLE_ID, DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, ROLE_TO_REMOVE_ON_VERIFICATION_ID, GUILD_ID } from '../config.js';
+import { VERIFICATION_CHANNEL_ID, VERIFICATION_MESSAGE_ID, VERIFIED_ROLE_ID, DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, ROLE_TO_REMOVE_ON_VERIFICATION_ID, GUILD_ID, VERIFICATION_LOG_CHANNEL_ID } from '../config.js';
 import { WELCOME_CONFIG } from '../welcome_config.js';
 import { createNamedPool, getNamedPool } from '../utils/database.js';
 import { loadJSON } from '../utils/fileUtils.js';
@@ -12,7 +12,6 @@ const VIP_CONFIG_FILE = join(__dirname, '..', 'vip_config.json');
 
 const VERIFICATION_IMAGE_URL = "https://iimg.su/i/3DPZl6";
 const PROJECT_URL = "https://luxecs2.ru/";
-const VERIFICATION_LOG_CHANNEL_ID = '1537043530353086474';
 
 function getVipSids() {
     const cfg = loadJSON(VIP_CONFIG_FILE, null);
