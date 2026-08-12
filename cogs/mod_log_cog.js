@@ -161,13 +161,13 @@ function isIgnoredChannel(channelId) {
 // ─── Применение тайм-аута + логирование ────────────────────────────────────
 async function applyTimeoutAndLog(client, message, result) {
     const member = message.member;
-    const minutes = 1440;
-    const until = new Date(Date.now() + minutes * 60 * 1000);
+    const minutes = config.timeout_minutes || 120;
+    const timeoutMs = minutes * 60 * 1000;
 
     const typeLabel = result.type === 'parent'
         ? '🚫 Оскорбление родителей'
         : '⚠️ Оскорбительное сообщение';
-    const reason = `${typeLabel}: обнаружено «${result.word}». Авто-модерация: тайм-аут 1 день.`;
+    const reason = `${typeLabel}: обнаружено «${result.word}». Авто-модерация: тайм-аут ${minutes} мин.`;
 
     let timeoutApplied = false;
     let deleteApplied = false;
@@ -181,10 +181,10 @@ async function applyTimeoutAndLog(client, message, result) {
         errors.push(`удаление: ${err.message}`);
     }
 
-    // Ставим тайм-аут
+    // Ставим тайм-аут (передаём миллисекунды, не Date — avoids "Invalid time value")
     try {
         if (member?.moderatable) {
-            await member.timeout(until, reason);
+            await member.timeout(timeoutMs, reason);
             timeoutApplied = true;
         } else {
             errors.push('недостаточно прав для тайм-аута участника');
@@ -201,7 +201,7 @@ async function applyTimeoutAndLog(client, message, result) {
         .addFields(
             { name: '👤 Участник', value: `<@${message.author.id}> (\`${message.author.tag}\`)`, inline: false },
             { name: '📝 Тип', value: typeLabel, inline: true },
-            { name: '⏰ Длительность', value: '1 день', inline: true },
+            { name: '⏰ Длительность', value: `${minutes} мин`, inline: true },
             { name: '💬 Триггер', value: `\`${result.word}\``, inline: true },
             { name: '📌 Канал', value: `<#${message.channelId}>`, inline: true },
             { name: '🗑️ Сообщение', value: deleteApplied ? 'Удалено' : 'Не удалено', inline: true },
