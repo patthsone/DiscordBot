@@ -12,6 +12,7 @@ const VIP_CONFIG_FILE = join(__dirname, '..', 'vip_config.json');
 
 const VERIFICATION_IMAGE_URL = "https://iimg.su/i/3DPZl6";
 const PROJECT_URL = "https://luxecs2.ru/";
+const VERIFICATION_LOG_CHANNEL_ID = '1537043530353086474';
 
 function getVipSids() {
     const cfg = loadJSON(VIP_CONFIG_FILE, null);
@@ -250,6 +251,30 @@ async function verifyUser(user, steam64) {
         // client.updateDonateRole регистрируется cog'ом topdonate_cog. Если его нет — noop.
         if (discordClient && typeof discordClient.updateDonateRole === 'function') {
             discordClient.updateDonateRole(user, steam64);
+        }
+
+        // 📋 Лог верификации в отдельный канал
+        try {
+            const logChannel = discordClient?.channels?.cache?.get(VERIFICATION_LOG_CHANNEL_ID);
+            if (logChannel) {
+                const userObj = user.user || user;
+                const avatarURL = userObj.displayAvatarURL?.({ extension: 'png', size: 128 }) || null;
+                const logEmbed = new EmbedBuilder()
+                    .setTitle('✅ Новая верификация')
+                    .setColor(0x57F287)
+                    .setDescription(
+                        `> 👤 **Участник:** ${user} (\`${userObj.tag}\`)\n` +
+                        `> 🆔 **Discord ID:** \`${user.id}\`\n` +
+                        `> 🎮 **Steam64:** \`${steam64}\`\n` +
+                        `> 🔗 **Профиль:** [Steam](https://steamcommunity.com/profiles/${steam64})`
+                    )
+                    .setThumbnail(avatarURL)
+                    .setFooter({ text: 'LuxeCS2 · Верификация' })
+                    .setTimestamp();
+                await logChannel.send({ embeds: [logEmbed] });
+            }
+        } catch (logErr) {
+            console.log(`Не удалось отправить лог верификации: ${logErr.message}`);
         }
         
         let dmSent = false;
