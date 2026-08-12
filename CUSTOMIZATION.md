@@ -376,4 +376,40 @@ A: `cogs/welcome_cog.js` → `WELCOME_BANNER_URL` (строка 11). Авата�
 
 ---
 
+## 🐳 Настройка в Docker
+
+### Где менять настройки
+
+При установке через Docker действуют те же правила, но:
+
+| Что менять | Где | Нужно ли пересобирать? |
+|------------|-----|----------------------|
+| Секреты (токены, ключи) | `.env` | Нет — `docker compose restart` |
+| ID каналов/ролей в `config.js` | `config.js` (примонтирован как `:ro`) | Нет — `docker compose restart` |
+| Тексты приветствия | `welcome_config.js` (примонтирован) | Нет — `docker compose restart` |
+| Код когов (цвета, пороги) | Файлы в `cogs/` | **Да** — `bash update.sh` или `docker compose up -d --build` |
+| Список плохих слов | `data/modlog_config.json` | Нет — `docker compose restart` |
+| Длительность таймаута | `data/modlog_config.json` → `timeout_minutes` | Нет — `docker compose restart` |
+
+### Обновление после изменения кода
+
+```bash
+# Если изменили код когов (не конфиг):
+docker compose up -d --build
+
+# Если изменили только .env или config.js:
+docker compose restart
+```
+
+### Структура томов (volumes)
+
+```
+./data/           → /app/data/         (runtime-данные: levels, configs)
+./config.js       → /app/config.js     (примонтирован read-only)
+./welcome_config.js → /app/welcome_config.js
+./.env            → переменные окружения
+```
+
+---
+
 > 📖 Если что-то непонятно — откройте [issue на GitHub](https://github.com/patthsone/DiscordBot/issues).

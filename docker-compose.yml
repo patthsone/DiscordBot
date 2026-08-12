@@ -1,0 +1,19 @@
+services:
+  discord-bot:
+    build: .
+    container_name: luxecs2-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Runtime-данные (сохраняются между пересборками)
+      - ./data:/app/data
+      # Конфиги (можно редактировать без пересборки)
+      - ./config.js:/app/config.js:ro
+      - ./welcome_config.js:/app/welcome_config.js:ro
+    # Логи видны через: docker compose logs -f
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
