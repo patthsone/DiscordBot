@@ -504,7 +504,7 @@ export default function(client) {
                     try {
                         role = await guild.roles.create({
                             name: roleName,
-                            color: 0xFFD700,
+                            colors: { primary: 0xFFD700 },
                             reason: 'Автоматическое создание VIP роли'
                         });
                         console.log(`✅ Создана роль: ${roleName}`);

@@ -164,7 +164,7 @@ async function ensureDonateRoles(guild) {
             try {
                 role = await guild.roles.create({
                     name,
-                    color: ROLE_COLORS[key],
+                    colors: { primary: ROLE_COLORS[key] },
                     mentionable: false,
                     hoist: false,
                     reason: 'Автосоздание донат-роли'

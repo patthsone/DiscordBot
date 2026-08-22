@@ -90,7 +90,7 @@ async function ensureLevelRoles(guild) {
             try {
                 role = await guild.roles.create({
                     name: roleName,
-                    color: LEVEL_COLORS[level] || 0x99AAB5,
+                    colors: { primary: LEVEL_COLORS[level] || 0x99AAB5 },
                     mentionable: false,
                     hoist: false,
                     reason: `Автосоздание роли уровня FACEIT ${level}`

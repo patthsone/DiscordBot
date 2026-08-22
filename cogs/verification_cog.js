@@ -141,7 +141,7 @@ async function processRoles(memberParam, steam64) {
             try {
                 expectedVipRole = await guild.roles.create({
                     name: `${vipGroup}`,
-                    color: 0xFFD700,
+                    colors: { primary: 0xFFD700 },
                     reason: `Автоматическое создание VIP роли для пользователя ${member.user.tag}`
                 });
                 console.log(`Создана роль: ${vipGroup}`);
@@ -550,7 +550,7 @@ export default async function(client) {
                 if (!role) {
                     role = await guild.roles.create({
                         name: roleName,
-                        color: 0xFFD700
+                        colors: { primary: 0xFFD700 }
                     });
                     console.log(`Создана роль: ${roleName}`);
                 }
@@ -560,7 +560,7 @@ export default async function(client) {
             if (!verifiedRole) {
                 verifiedRole = await guild.roles.create({
                     name: 'Верифицирован',
-                    color: 0x00FF00
+                    colors: { primary: 0x00FF00 }
                 });
                 console.log('Создана роль: Верифицирован');
             }
