@@ -8,13 +8,13 @@
  * о наборе в команду модераторов (с @everyone), содержащее:
  *   • заголовок и описание
  *   • список пунктов заявки
- *   • ссылку на сайт luxecs2.ru и кнопку
+ *   • ссылку на сайт luxecs2.su и кнопку
  */
 
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from 'discord.js';
 import { ADMIN_ROLE_ID } from '../config.js';
 
-const SITE_URL = 'https://luxecs2.ru/';
+const SITE_URL = 'https://luxecs2.su/';
 
 // Текст объявления (вынесен отдельно — легко править)
 const RECRUITMENT = {

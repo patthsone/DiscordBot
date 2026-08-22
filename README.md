@@ -55,7 +55,7 @@ bash update.sh
 - **🤖 Авто-модерация** — фильтр мата/оскорблений с таймаутом, логирование действий модерации
 - **🔔 Уведомления** — DM о скором истечении VIP
 - **😂 Шутки** — автоматическая отправка CS2-шуток каждые 2 часа
-- **🌐 Интеграция с сайтом** — кнопки-ссылки на [luxecs2.ru](https://luxecs2.ru/)
+- **🌐 Интеграция с сайтом** — кнопки-ссылки на [luxecs2.su](https://luxecs2.su/)
 
 ## 🚀 Установка (без Docker — вручную)
 
@@ -220,11 +220,11 @@ FACEIT_GAME=cs2
 
 **MIT License** — см. [LICENSE](LICENSE).
 
-Copyright © 2026 **patthsone** · [GitHub](https://github.com/patthsone) · [luxecs2.ru](https://luxecs2.ru)
+Copyright © 2026 **patthsone** · [GitHub](https://github.com/patthsone) · [luxecs2.su](https://luxecs2.su)
 
 > ⚠️ **При распространении или модификации** обязательное условие — сохранять указание автора (файлы [LICENSE](LICENSE) и [NOTICE](NOTICE)). Файл `NOTICE` должен включаться во все копии и производные работы.
 
 ### 👤 Автор
 
 - **patthsone** — [GitHub](https://github.com/patthsone) · [Discord](https://discord.gg/) · akeno.takymo@gmail.com
-- Проект: [LuxeCS2](https://luxecs2.ru)
+- Проект: [LuxeCS2](https://luxecs2.su)

@@ -216,7 +216,7 @@ const THEME = {
     EXPIRED:   0xED4245, // красный — истёк
     DIVIDER:   '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯'
 };
-const PROJECT_URL = 'https://luxecs2.ru/';
+const PROJECT_URL = 'https://luxecs2.su/';
 
 // Иконка ранга по названию группы
 function rankIcon(group) {

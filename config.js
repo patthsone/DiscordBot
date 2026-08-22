@@ -8,7 +8,7 @@ export const DISCORD_TOKEN = process.env.DISCORD_TOKEN || '';
 
 export const DEFAULT_SERVERS = [
     {
-        name: '➥ ███ LUXECS2.RU | ★ BLACK | MIRAGE MODELS',
+        name: '➥ ███ LUXECS2.SU | ★ BLACK | MIRAGE MODELS',
         ip: '81.163.17.83',
         port: 27715,
         location: 'Russia',
@@ -16,7 +16,7 @@ export const DEFAULT_SERVERS = [
         game: 'Counter-Strike 2'
     },
     {
-        name: '➥ ███ LUXECS2.RU | ★ RED | MIRAGE FPS+',
+        name: '➥ ███ LUXECS2.SU | ★ RED | MIRAGE FPS+',
         ip: '95.213.255.148',
         port: 27115,
         location: 'Russia',

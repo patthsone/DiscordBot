@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 const VIP_CONFIG_FILE = join(__dirname, '..', 'vip_config.json');
 
 const VERIFICATION_IMAGE_URL = "https://raw.githubusercontent.com/patthsone/luxefails/refs/heads/main/verificat.png";
-const PROJECT_URL = "https://luxecs2.ru/";
+const PROJECT_URL = "https://luxecs2.su/";
 
 function getVipSids() {
     const cfg = loadJSON(VIP_CONFIG_FILE, null);

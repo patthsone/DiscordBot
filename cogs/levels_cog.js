@@ -4,7 +4,7 @@ import { renderRankCard } from '../utils/cardBuilder.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-const PROJECT_URL = 'https://luxecs2.ru/';
+const PROJECT_URL = 'https://luxecs2.su/';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

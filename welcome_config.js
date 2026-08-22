@@ -1,7 +1,7 @@
 export const WELCOME_CONFIG = {
-    website: 'Luxecs2.ru',
-    websiteUrl: 'https://Luxecs2.ru',
-    rulesUrl: 'https://Luxecs2.ru/help',
+    website: 'Luxecs2.su',
+    websiteUrl: 'https://Luxecs2.su',
+    rulesUrl: 'https://Luxecs2.su/help',
     
     channels: {
         welcome: '1304626406436896918',
@@ -18,8 +18,8 @@ export const WELCOME_CONFIG = {
     },
     
     welcomeMessage: `**Основная информация**
-    Ссылка на сайт - ◜Luxecs2.ru◞
-    Ссылка на правила - ◜Luxecs2.ru/help◞
+    Ссылка на сайт - ◜Luxecs2.su◞
+    Ссылка на правила - ◜Luxecs2.su/help◞
 
      Верификация в канале:  ◜<#1448258346946924594>◞
 ᅠ   Ознакомься в канале:  ◜<#1303531811628122114>◞

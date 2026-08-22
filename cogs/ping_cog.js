@@ -4,7 +4,7 @@ import { getNamedPool } from '../utils/database.js';
 import { getServerInfo } from '../utils/serverMonitor.js';
 import { loadavg } from 'node:os';
 
-const PROJECT_URL = 'https://luxecs2.ru/';
+const PROJECT_URL = 'https://luxecs2.su/';
 
 // ─── Премиум-палитра ────────────────────────────────────────────────────────
 const THEME = {

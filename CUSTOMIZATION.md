@@ -89,7 +89,7 @@ const WELCOME_BANNER_URL = 'https://...';  // ← ссылка на картин
 ### Текст приветствия — файл `welcome_config.js`
 ```js
 welcomeMessage: `**Основная информация}
-    Ссылка на сайт - ◜Luxecs2.ru◞
+    Ссылка на сайт - ◜Luxecs2.su◞
     ...`
 ```
 Меняйте текст, ссылки, названия каналов под свой сервер.
@@ -205,7 +205,7 @@ const VERIFICATION_IMAGE_URL = "https://i.yapx.ru/dVYOy.png";
 
 ### Ссылка на сайт
 ```js
-const PROJECT_URL = "https://luxecs2.ru/";
+const PROJECT_URL = "https://luxecs2.su/";
 ```
 
 ### VIP-ранги для сообщения
@@ -352,7 +352,7 @@ function latencyIcon(ms) {
 
 ### Ссылка на сайт (строка 7)
 ```js
-const PROJECT_URL = 'https://luxecs2.ru/';
+const PROJECT_URL = 'https://luxecs2.su/';
 ```
 
 ---
