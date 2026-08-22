@@ -31,11 +31,12 @@ const UPDATE_MINUTE_UTC = 0;
 const DAILY_CHECK_INTERVAL_MS = 60 * 60 * 1000;  // проверяем «наступило ли 05:00» раз в час
 const INITIAL_DELAY_MS = 120 * 1000;             // первая проверка через 2 мин после старта
 
-// Префикс имени роли. Роли: «FACEIT 1» ... «FACEIT 10».
+// Префикс имени роли. Роли: «FACEIT 0» ... «FACEIT 10» (0 = без калибровки).
 const ROLE_PREFIX = 'FACEIT ';
 
 // Цвета ролей по уровням — приближены к официальной палитре FACEIT.
 const LEVEL_COLORS = {
+    0:  0x6E6E6E,  // тёмно-серый — без калибровки (placements не пройдены)
     1:  0x8B8B8B,  // серый
     2:  0x4A90D9,  // синий
     3:  0x4A90D9,
@@ -50,7 +51,7 @@ const LEVEL_COLORS = {
 
 // Эмодзи для ролей (опционально, не во всех названиях работает)
 const LEVEL_EMOJI = {
-    1: '🩶', 2: '🔹', 3: '🔹', 4: '🟢', 5: '🟢',
+    0: '⚪', 1: '🩶', 2: '🔹', 3: '🔹', 4: '🟢', 5: '🟢',
     6: '🟠', 7: '🟠', 8: '🔴', 9: '🔴', 10: '🟣'
 };
 
@@ -60,7 +61,7 @@ const LEVEL_EMOJI = {
 function isFaceitRole(roleName) {
     if (!roleName || !roleName.startsWith(ROLE_PREFIX)) return false;
     const num = roleName.slice(ROLE_PREFIX.length).trim();
-    return /^\d{1,2}$/.test(num) && Number(num) >= 1 && Number(num) <= 10;
+    return /^\d{1,2}$/.test(num) && Number(num) >= 0 && Number(num) <= 10;
 }
 
 // Извлечь номер уровня из имени роли
@@ -80,9 +81,9 @@ function getMemberFaceitRoles(member) {
     return member.roles.cache.filter(r => isFaceitRole(r.name));
 }
 
-// Создать все 10 ролей уровней, если их нет
+// Создать все роли уровней (0-10), если их нет
 async function ensureLevelRoles(guild) {
-    for (let level = 1; level <= 10; level++) {
+    for (let level = 0; level <= 10; level++) {
         const roleName = `${ROLE_PREFIX}${level}`;
         let role = guild.roles.cache.find(r => r.name === roleName);
         if (!role) {
