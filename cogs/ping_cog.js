@@ -132,11 +132,13 @@ export default function(client) {
         if (client.handledInteractions.has(interaction.id)) return;
         client.handledInteractions.add(interaction.id);
 
-        const sent = await interaction.deferReply({ fetchReply: true });
+        // deferReply без fetchReply (deprecated) — получаем ответ через fetchWebhook
+        const startedAt = Date.now();
+        await interaction.deferReply();
 
         // Задержки
         const apiLatency = Math.round(client.ws.ping);
-        const roundtrip = sent.createdTimestamp - interaction.createdTimestamp;
+        const roundtrip = Date.now() - startedAt;
 
         // Аптайм и память
         const uptime = process.uptime();

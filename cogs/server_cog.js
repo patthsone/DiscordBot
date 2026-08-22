@@ -101,7 +101,9 @@ export default function(client) {
                     try {
                         const embed = await createServerEmbed(SERVERS[i]);
                         const msg = await channel.messages.fetch(messageIds[i]);
-                        await msg.edit({ embeds: [embed] });
+                        // components: [] — сбрасываем старые компоненты сообщения
+                        // (могли содержать невалидные steam:// ссылки → Invalid Form Body)
+                        await msg.edit({ embeds: [embed], components: [] });
                     } catch (err) {
                         if (err.code === 10008) {
                             console.log(`⚠️ Сообщение ${messageIds[i]} не найдено, удаляем ID`);
@@ -219,7 +221,7 @@ export default function(client) {
             try {
                 const embed = await createServerEmbed(freshServers[i]);
                 const msg = await channel.messages.fetch(freshIds[i]);
-                await msg.edit({ embeds: [embed] });
+                await msg.edit({ embeds: [embed], components: [] });
             } catch (err) {
                 if (err.code === 10008) {
                     freshIds.splice(i, 1);

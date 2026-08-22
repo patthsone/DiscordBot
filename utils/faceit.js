@@ -107,8 +107,9 @@ export async function getFaceitLevelBySteam64(steam64) {
         const games = data?.games || {};
         const gameData = games[FACEIT_GAME] || games.csgo || games.cs2 || null;
 
-        if (!gameData || typeof gameData.skill_level !== 'number') {
-            // Игрок есть, но не играет в CS2/CSGO
+        // skill_level = 0 — игрок не прошёл калибровку (нет placements).
+        // Роли «FACEIT 0» не существует — считаем «не найдено» (роли будут сняты).
+        if (!gameData || typeof gameData.skill_level !== 'number' || gameData.skill_level < 1) {
             const result = { found: false };
             setCached(cacheKey, result);
             return result;
